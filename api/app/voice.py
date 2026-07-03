@@ -9,8 +9,33 @@ replay of a memory sounds identical.
 from __future__ import annotations
 
 import hashlib
+import json
+import os
+import urllib.request
 
 from .config import settings
+
+# Local Kokoro TTS microservice — a real open-source neural voice, fully local,
+# no API key, nothing leaves the machine. Primary when running (see run_tts.sh).
+_KOKORO_URL = os.environ.get("KOKORO_URL", "http://127.0.0.1:8765")
+_KOKORO_VOICE = os.environ.get("KOKORO_VOICE", "am_michael")
+
+
+def _kokoro(text: str) -> bytes:
+    """Real human-sounding local neural voice. Returns MP3 bytes, or b'' if the
+    TTS service isn't running (so the app cleanly falls back to Polly)."""
+    if not _KOKORO_URL:
+        return b""
+    try:
+        body = json.dumps({"text": _human_text(text), "voice": _KOKORO_VOICE}).encode("utf-8")
+        req = urllib.request.Request(
+            _KOKORO_URL, data=body,
+            headers={"Content-Type": "application/json"}, method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return r.read()
+    except Exception:  # noqa: BLE001
+        return b""
 
 # ElevenLabs voice settings tuned for warm, unhurried reminiscing.
 _EL_SETTINGS = {
@@ -106,12 +131,13 @@ def synthesize(text: str) -> bytes:
     if not text:
         return b""
 
-    provider = "el" if settings.elevenlabs_api_key else "polly"
-    key = hashlib.sha1(f"{provider}:{text}".encode("utf-8")).hexdigest()
+    provider = "kokoro" if _KOKORO_URL else ("el" if settings.elevenlabs_api_key else "polly")
+    key = hashlib.sha1(f"{provider}:{_KOKORO_VOICE}:{text}".encode("utf-8")).hexdigest()
     if key in _audio_cache:
         return _audio_cache[key]
 
-    audio = _elevenlabs(text) or _polly_speak(text)
+    # Kokoro (local human voice) → ElevenLabs (if keyed) → Polly (always-on fallback).
+    audio = _kokoro(text) or _elevenlabs(text) or _polly_speak(text)
     if audio:
         _audio_cache[key] = audio
     return audio
