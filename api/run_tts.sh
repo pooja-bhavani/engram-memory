@@ -10,7 +10,7 @@ ESPEAK_PREFIX="$(brew --prefix espeak-ng)"
 
 export KOKORO_MODEL="$MODELS/kokoro-v1.0.onnx"
 export KOKORO_VOICES="$MODELS/voices-v1.0.bin"
-export KOKORO_VOICE="${KOKORO_VOICE:-bf_isabella}"
+export KOKORO_VOICE="${KOKORO_VOICE:-zm_yunjian}"
 export KOKORO_SPEED="${KOKORO_SPEED:-0.85}"
 export KOKORO_PORT="${KOKORO_PORT:-8765}"
 export PHONEMIZER_ESPEAK_LIBRARY="$ESPEAK_PREFIX/lib/libespeak-ng.dylib"
