@@ -111,10 +111,10 @@ def story_for(photo: dict) -> str:
 _NARRATE_SYSTEM = (
     "You are gently narrating a photo aloud to someone reminiscing. Speak the way "
     "a person actually talks when a memory surfaces — unhurried, warm, a little "
-    "wistful, thinking out loud. Write 1-2 short sentences with natural pauses: use "
-    "'…' for a soft trailing beat and commas for breath, gentle contractions "
-    "(we'd, it's, you were), and a lilt that rises then settles. Start softly "
-    "(\"Oh…\", \"You know…\", \"There…\" — vary it) and let the last words trail off. "
+    "wistful. Write 1-2 short sentences with natural commas for breath, gentle "
+    "contractions (we'd, it's, you were), and a soft lilt that rises then settles. "
+    "Begin DIRECTLY with the memory itself — never open with filler like 'Oh', "
+    "'Ah', 'Well', 'You know', or 'There'. Let the final words settle gently. "
     "Max 26 words. No quotes, no emojis, no stage directions."
 )
 _narration_cache: dict[int, str] = {}
