@@ -18,7 +18,7 @@ from .config import settings
 # Local Kokoro TTS microservice — a real open-source neural voice, fully local,
 # no API key, nothing leaves the machine. Primary when running (see run_tts.sh).
 _KOKORO_URL = os.environ.get("KOKORO_URL", "http://127.0.0.1:8765")
-_KOKORO_VOICE = os.environ.get("KOKORO_VOICE", "am_michael")
+_KOKORO_VOICE = os.environ.get("KOKORO_VOICE", "af_heart")
 
 
 def _kokoro(text: str) -> bytes:
@@ -64,8 +64,12 @@ _audio_cache: dict[str, bytes] = {}
 
 
 def _human_text(text: str) -> str:
-    """Light touches that make real TTS breathe — gentle pauses, soft trailing."""
+    """Shape the text so the neural voice breathes — dashes become soft pauses and
+    the line trails off gently, the way people sound when a memory surfaces."""
     t = " ".join(text.strip().split())
+    t = t.replace(" — ", " … ").replace("—", " … ").replace(" - ", " … ")
+    if not t.endswith(("…", ".", "!", "?")):
+        t += " …"
     return t
 
 
