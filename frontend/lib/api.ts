@@ -72,7 +72,7 @@ export const api = {
 
   // ?v busts any audio the browser cached from an earlier voice. Bump this
   // whenever the narration voice changes (currently zm_yunjian).
-  narrateUrl: (id: number) => `${API}/api/narrate/${id}?v=zmyunjian`,
+  narrateUrl: (id: number) => `${API}/api/narrate/${id}?v=emalex`,
 
   ask: async (
     question: string,
