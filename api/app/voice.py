@@ -45,8 +45,9 @@ _EL_SETTINGS = {
     "use_speaker_boost": True,
 }
 
-# --- Polly fallback (Ruth long-form, the most human AWS voice) ---------------
-_POLLY_VOICE = "Ruth"
+# --- Polly fallback: a MALE voice, so if Kokoro is ever down the app doesn't
+# suddenly switch to a female voice mid-session. Keeps the voice single-gender.
+_POLLY_VOICE = "Matthew"
 try:
     import boto3
     from botocore.config import Config

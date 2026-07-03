@@ -70,8 +70,9 @@ export const api = {
 
   story: (id: number) => jget<{ story: string }>(`/api/frame/story/${id}`),
 
-  // ?v busts any audio the browser cached from an earlier voice (now Kokoro).
-  narrateUrl: (id: number) => `${API}/api/narrate/${id}?v=kokoro1`,
+  // ?v busts any audio the browser cached from an earlier voice. Bump this
+  // whenever the narration voice changes (currently zm_yunjian).
+  narrateUrl: (id: number) => `${API}/api/narrate/${id}?v=zmyunjian`,
 
   ask: async (
     question: string,
