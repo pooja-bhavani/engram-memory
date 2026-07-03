@@ -118,6 +118,33 @@ app.add_middleware(
 @app.on_event("startup")
 def startup() -> None:
     Base.metadata.create_all(bind=engine)
+    # Pre-warm narration in the background so the voice starts INSTANTLY on the
+    # first click (otherwise the first play waits on a fresh Bedrock + Polly call).
+    import threading
+
+    threading.Thread(target=_prewarm_voices, daemon=True).start()
+
+
+def _prewarm_voices() -> None:
+    """Generate + cache narration audio for every ready memory, off the request path."""
+    import time
+
+    from . import curation, voice
+    from .db import SessionLocal
+    from .models import Photo
+
+    try:
+        db = SessionLocal()
+        photos = db.query(Photo).filter(Photo.cognee_status == "ready").all()
+        db.close()
+        for p in photos:
+            try:
+                voice.synthesize(curation.narration_text(p.public()))
+            except Exception:  # noqa: BLE001
+                pass
+            time.sleep(0.25)  # gentle pace so we don't hammer Bedrock/Polly
+    except Exception:  # noqa: BLE001
+        pass
 
 
 app.mount("/media", StaticFiles(directory=str(UPLOAD_DIR)), name="media")

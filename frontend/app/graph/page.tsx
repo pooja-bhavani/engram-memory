@@ -4,7 +4,7 @@ import GraphView from "@/components/GraphView";
 export default function GraphPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#15131a] to-[#0b0b0e] px-6 py-10 text-stone-200 md:px-12">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-[1800px]">
         <div className="mb-2 flex items-center justify-between">
           <Link href="/" className="text-sm text-stone-400 transition hover:text-gold">
             ← back to Engram

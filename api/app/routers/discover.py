@@ -85,8 +85,7 @@ def narrate(photo_id: int, db: Session = Depends(get_db)) -> Response:
     return Response(
         content=voice.synthesize(text),
         media_type="audio/mpeg",
-        # Don't let the browser replay stale audio — the server already caches
-        # the synthesized bytes in-memory, so re-fetching is instant and always
-        # returns the single, current Ruth voice.
-        headers={"Cache-Control": "no-store, must-revalidate"},
+        # The narration for a memory is stable, so let the browser cache it —
+        # replays are then instant with no server round-trip.
+        headers={"Cache-Control": "public, max-age=86400"},
     )

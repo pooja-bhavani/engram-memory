@@ -144,7 +144,7 @@ export default function Home() {
     <main className="grain relative min-h-screen bg-ink">
       <div className="aura-bg" />
       {/* Nav */}
-      <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+      <nav className="relative z-10 mx-auto flex max-w-[1800px] items-center justify-between px-6 py-6">
         <div className="flex items-center gap-3">
           <Logo size={46} />
           <div className="leading-none">
@@ -210,7 +210,7 @@ export default function Home() {
         />
       </nav>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6 pb-24">
+      <div className="relative z-10 mx-auto max-w-[1800px] px-6 pb-24">
         {/* AI insights */}
         <Insights photos={all} />
 
