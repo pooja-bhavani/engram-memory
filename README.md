@@ -14,6 +14,14 @@
 
 ---
 
+> **🌐 Live demo:** https://tolerance-maternity-bolt-friendly.trycloudflare.com
+> Engram is **self-hosted by design** — the live link tunnels to a machine running the full
+> stack (Cognee from source, Postgres+pgvector, local Kokoro voice). If the tunnel is
+> offline, everything runs locally in two commands — see [Run it locally](#run-it-locally) —
+> and the demo video shows the full experience.
+
+---
+
 ## Why Engram
 
 <img width="2880" height="1800" alt="home" src="https://github.com/user-attachments/assets/1a347c28-86ba-4318-81c5-a07a6e822d27" />
@@ -54,7 +62,7 @@ Photos ─▶ AWS Bedrock (Claude vision + Titan embeddings)
        ─▶ Next.js  ── the Engram experience
 ```
 
-- **Memory:** self-hosted Cognee — Kuzu (graph) + LanceDB (vectors) + SQLite. No cloud memory service.
+- **Memory:** self-hosted Cognee on **one Postgres (+pgvector) instance serving all three stores** — relational, graph *and* vectors (`COGNEE_STORE=postgres`); flips to fully-local Kuzu + LanceDB + SQLite with `COGNEE_STORE=local`. No cloud memory service either way.
 - **LLM + embeddings:** AWS Bedrock (Claude 3.5 Sonnet + Titan) via Cognee's LiteLLM layer — runs on existing credits, no per-call SaaS bill.
 - **Photo metadata:** SQLite (canonical record for the UI); Cognee holds the semantic memory + graph.
 
