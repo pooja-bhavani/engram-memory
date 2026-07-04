@@ -12,8 +12,6 @@
 
 </div>
 
-![How Engram uses Cognee](blog/images/diagram.png)
-
 ---
 
 ## Why Engram
