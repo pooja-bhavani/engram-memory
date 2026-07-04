@@ -15,6 +15,7 @@
 ---
 
 > **🌐 Live demo:** https://tolerance-maternity-bolt-friendly.trycloudflare.com
+> **Blog:** https://medium.com/@poojabhavani19/we-gave-our-photos-a-memory-ff90b354bb82
 > Engram is **self-hosted by design** — the live link tunnels to a machine running the full
 > stack (Cognee from source, Postgres+pgvector, local Kokoro voice). If the tunnel is
 > offline, everything runs locally in two commands — see [Run it locally](#run-it-locally) —
